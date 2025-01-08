@@ -36,6 +36,7 @@ pipeline {
 			docker rm -f $(docker ps -a -q)
 		  else
 			echo "Não ha container para remover"
+		  fi
 		'''
                 sh 'docker-compose -f docker-compose.yml up -d'
 

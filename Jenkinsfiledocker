@@ -31,8 +31,12 @@ pipeline {
         stage('Teste Aplicação') {
             steps {
                 // Testes automatizados da aplicação
-       		//sh 'docker rm -f $(docker ps -a -q)'
-		sh 'docker rm -f web db nginx'
+		sh '''
+       		  if ["$(docker ps -a -q)" ]; then
+			docker rm -f $(docker ps -a -q)
+		  else
+			echo "Não ha container para remover"
+		'''
                 sh 'docker-compose -f docker-compose.yml up -d'
 
                 // Realize os testes nos serviços em execução
